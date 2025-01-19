@@ -6,6 +6,16 @@ const app: Express = express();
 
 setupSwagger(app);
 
+/**
+ * @openapi
+ * /:
+ *  get:
+ *   summary: Display "Hello World!"
+ *   tags: [Default]
+ *   responses:
+ *    200:
+ *     description: Displays "Hello World!"
+*/
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
