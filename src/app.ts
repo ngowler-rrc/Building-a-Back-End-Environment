@@ -1,7 +1,8 @@
 import express, { Express } from "express";
 
 import setupSwagger from "../config/swagger";
-import healthRoutes from './api/v1/routes/healthRoutes';
+import healthRoutes from "./api/v1/routes/healthRoutes";
+import { calculatePortfolioPerformance } from "./portfolio/portfolioPerformance"
 
 const app: Express = express();
 
@@ -35,16 +36,6 @@ app.get("/tasks", (req, res) => {
     res.send("Retrieve tasks");
 });
 
-/**
- * @openapi
- * /api/v1/health:
- *  get:
- *   summary: Return server's status and api version
- *   tags: [Health]
- *   responses:
- *    200:
- *     description: Returns server's status and api version.
-*/
 app.use('/api/v1', healthRoutes);
 
 export default app;

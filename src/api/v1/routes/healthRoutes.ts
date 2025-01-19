@@ -2,6 +2,16 @@ import express, { Express, Router } from "express";
 
 const router: Router = express.Router();
 
+/**
+ * @openapi
+ * /api/v1/health:
+ *  get:
+ *   summary: Return server's status and api version
+ *   tags: [Health]
+ *   responses:
+ *    200:
+ *     description: Returns server's status and api version.
+*/
 router.get("/health", (req, res) => {
 	res.json({
 		status: "OK",

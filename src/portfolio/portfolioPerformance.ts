@@ -1,4 +1,4 @@
-interface PortfolioPerformance {
+export interface PortfolioPerformance {
     initialInvestment: number;
     currentValue: number;
     profitOrLoss: number;
@@ -27,9 +27,9 @@ export function calculatePortfolioPerformance(initialInvestment: number, current
         gainModerate: `The portfolio has gained moderately with a profit of $${profitOrLoss}.`,
         gainSlightly: `The portfolio has gained slightly with a profit of $${profitOrLoss}.`,
         noChange: `The portfolio has not changed.`,
-        lossSlightly: `The portfolio has lossed slightly with a loss of $${profitOrLoss}.`,
-        lossModerate: `The portfolio has lossed moderately with a loss of $${profitOrLoss}.`,
-        lossSignificant: `The portfolio has lossed significantly with a loss of $${profitOrLoss}.`
+        lossSlightly: `The portfolio has lost slightly with a loss of $${profitOrLoss}.`,
+        lossModerate: `The portfolio has lost moderately with a loss of $${profitOrLoss}.`,
+        lossSignificant: `The portfolio has lost significantly with a loss of $${profitOrLoss}.`
     };
 
     let performanceSummary =
@@ -37,9 +37,9 @@ export function calculatePortfolioPerformance(initialInvestment: number, current
     percentageChange > 10 ? summaries.gainModerate :
     percentageChange > 0.1 ? summaries.gainSlightly :
     percentageChange === 0 ? summaries.noChange :
-    percentageChange < -20 ? summaries.lossSignificant :
-    percentageChange < -10 ? summaries.lossModerate :
     percentageChange < -0.1 ? summaries.lossSlightly :
+    percentageChange < -10 ? summaries.lossModerate :
+    percentageChange < -20 ? summaries.lossSignificant :
     summaries.noChange;
 
 	const portfolioPerformance: PortfolioPerformance = {
