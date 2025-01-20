@@ -10,7 +10,8 @@ const swaggerOptions: swaggerJSDoc.Options = {
             version: "1.0.0",
         },
     },
-    apis: ["./src/app.ts"],
+    apis: ["./src/app.ts",
+    "./src/api/v1/routes/healthRoutes.ts"]
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
