@@ -1,11 +1,10 @@
 import request, { Response } from "supertest";
-import { calculatePortfolioPerformance, PortfolioPerformance } from "../src/portfolio/portfolioPerformance"; // Import the function to mock
+import { calculatePortfolioPerformance, PortfolioPerformance, Asset, findLargestHolding, AssetAllocation, findAssetAllocationPercentage } from "../src/portfolio/portfolioPerformance"; // Import the function to mock
 
 // Mock the function from the file
 jest.mock("../src/portfolio/portfolioPerformance");
 
 describe("calculatePortfolioPerformanceFunction", () => {
-
     it("preformance summary should be significant profit", () => {
 		// Arrange
         const mockValue: PortfolioPerformance = {
@@ -22,7 +21,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
 		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 13000);
 
 		// Assert
-		expect(result).toEqual(mockValue);
+		expect(result).toBe(mockValue);
 	});
 
 	it("preformance summary should be moderate profit", () => {
@@ -41,7 +40,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
 		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 12000);
 
 		// Assert
-		expect(result).toEqual(mockValue);
+		expect(result).toBe(mockValue);
 	});
 
     it("preformance summary should be slight profit", () => {
@@ -60,7 +59,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
 		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 11000);
 
 		// Assert
-		expect(result).toEqual(mockValue);
+		expect(result).toBe(mockValue);
 	});
 
     it("preformance summary should be no change positive edge case", () => {
@@ -79,7 +78,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
 		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 10010);
 
 		// Assert
-		expect(result).toEqual(mockValue);
+		expect(result).toBe(mockValue);
 	});
 
     it("preformance summary should be no change negative edge case", () => {
@@ -98,7 +97,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
 		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 9990);
 
 		// Assert
-		expect(result).toEqual(mockValue);
+		expect(result).toBe(mockValue);
 	});
 
     it("preformance summary should be slight loss", () => {
@@ -117,7 +116,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
 		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 9000);
 
 		// Assert
-		expect(result).toEqual(mockValue);
+		expect(result).toBe(mockValue);
 	});
 
     it("preformance summary should be slight loss", () => {
@@ -136,7 +135,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
 		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 8000);
 
 		// Assert
-		expect(result).toEqual(mockValue);
+		expect(result).toBe(mockValue);
 	});
 
     it("preformance summary should be significant loss", () => {
@@ -155,6 +154,71 @@ describe("calculatePortfolioPerformanceFunction", () => {
 		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 7000);
 
 		// Assert
-		expect(result).toEqual(mockValue);
+		expect(result).toBe(mockValue);
+	});
+});
+
+describe("findLargestHolding", () => {
+	it("should return the largest holding", () => {
+		// Arrange
+        const mockValue: Asset = { name: 'Asset 2', value: 3000 }
+
+		const mockImput: Asset[] = [
+            { name: 'Asset 1', value: 2000 },
+            { name: 'Asset 2', value: 3000 },
+            { name: 'Asset 3', value: 1000 }
+        ];
+
+        (findLargestHolding as jest.Mock).mockReturnValue(mockValue);
+
+		// Act
+		const result: Asset = findLargestHolding(mockImput);
+
+		// Assert
+		expect(result).toBe(mockValue);
+	});
+
+    it("should return the first largest holding", () => {
+		// Arrange
+        const mockValue: Asset = { name: 'Asset 1', value: 2000 }
+
+		const mockImput: Asset[] = [
+            { name: 'Asset 1', value: 2000 },
+            { name: 'Asset 2', value: 1000 },
+            { name: 'Asset 3', value: 2000 }
+        ];
+
+        (findLargestHolding as jest.Mock).mockReturnValue(mockValue);
+
+		// Act
+		const result: Asset = findLargestHolding(mockImput);
+
+		// Assert
+		expect(result).toBe(mockValue);
+	});
+});
+
+describe("findAssetAllocationPercentage", () => {
+	it("should return an array of asset allocation percentage objects", () => {
+		// Arrange
+        const mockValue: AssetAllocation[] = [
+            { name: 'Asset 1', percentage: 1/3 },
+            { name: 'Asset 2', percentage: 1/2 },
+            { name: 'Asset 3', percentage: 1/6 }
+        ];
+
+		const mockImput: Asset[] = [
+            { name: 'Asset 1', value: 2000 },
+            { name: 'Asset 2', value: 3000 },
+            { name: 'Asset 3', value: 1000 }
+        ];
+
+        (findAssetAllocationPercentage as jest.Mock).mockReturnValue(mockValue);
+
+		// Act
+		const result: AssetAllocation[] = findAssetAllocationPercentage(mockImput);
+
+		// Assert
+		expect(result).toBe(mockValue);
 	});
 });
