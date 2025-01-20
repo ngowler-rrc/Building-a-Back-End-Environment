@@ -1,34 +1,38 @@
-import request, { Response } from "supertest";
 import { calculatePortfolioPerformance, PortfolioPerformance, Asset, findLargestHolding, AssetAllocation, findAssetAllocationPercentage } from "../src/portfolio/portfolioPerformance"; // Import the function to mock
 
 // Mock the function from the file
 jest.mock("../src/portfolio/portfolioPerformance");
 
 describe("calculatePortfolioPerformanceFunction", () => {
+
     it("preformance summary should be significant profit", () => {
 		// Arrange
+        const initialInvestment: number = 10000;
+        const currentValue: number = 13000;
         const mockValue: PortfolioPerformance = {
-            initialInvestment: 10000,
-            currentValue: 13000,
+            initialInvestment,
+            currentValue,
             profitOrLoss: 3000,
             percentageChange: 30,
-            performanceSummary: "The portfolio has gained significantly with a profit of $3000."
+            performanceSummary: `The portfolio has gained significantly with a profit of $3000.`
         };
 
         (calculatePortfolioPerformance as jest.Mock).mockReturnValue(mockValue);
 
 		// Act
-		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 13000);
+		const result = calculatePortfolioPerformance(initialInvestment, currentValue);
 
 		// Assert
-		expect(result).toBe(mockValue);
+		expect(result).toEqual(mockValue);
 	});
 
 	it("preformance summary should be moderate profit", () => {
 		// Arrange
+        const initialInvestment: number = 10000;
+        const currentValue: number = 12000;
         const mockValue: PortfolioPerformance = {
-            initialInvestment: 10000,
-            currentValue: 12000,
+            initialInvestment,
+            currentValue,
             profitOrLoss: 2000,
             percentageChange: 20,
             performanceSummary: "The portfolio has gained moderately with a profit of $2000."
@@ -37,7 +41,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
         (calculatePortfolioPerformance as jest.Mock).mockReturnValue(mockValue);
 
 		// Act
-		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 12000);
+		const result: PortfolioPerformance = calculatePortfolioPerformance(initialInvestment, currentValue);
 
 		// Assert
 		expect(result).toBe(mockValue);
@@ -45,9 +49,11 @@ describe("calculatePortfolioPerformanceFunction", () => {
 
     it("preformance summary should be slight profit", () => {
 		// Arrange
+        const initialInvestment: number = 10000;
+        const currentValue: number = 11000;
         const mockValue: PortfolioPerformance = {
-            initialInvestment: 10000,
-            currentValue: 11000,
+            initialInvestment,
+            currentValue,
             profitOrLoss: 1000,
             percentageChange: 10,
             performanceSummary: "The portfolio has gained slightly with a profit of $1000."
@@ -56,7 +62,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
         (calculatePortfolioPerformance as jest.Mock).mockReturnValue(mockValue);
 
 		// Act
-		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 11000);
+		const result: PortfolioPerformance = calculatePortfolioPerformance(initialInvestment, currentValue);
 
 		// Assert
 		expect(result).toBe(mockValue);
@@ -64,9 +70,11 @@ describe("calculatePortfolioPerformanceFunction", () => {
 
     it("preformance summary should be no change positive edge case", () => {
 		// Arrange
+        const initialInvestment: number = 10000;
+        const currentValue: number = 10010;
         const mockValue: PortfolioPerformance = {
-            initialInvestment: 10000,
-            currentValue: 10010,
+            initialInvestment,
+            currentValue,
             profitOrLoss: 10,
             percentageChange: 0.1,
             performanceSummary: "The portfolio has not changed."
@@ -75,7 +83,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
         (calculatePortfolioPerformance as jest.Mock).mockReturnValue(mockValue);
 
 		// Act
-		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 10010);
+		const result: PortfolioPerformance = calculatePortfolioPerformance(initialInvestment, currentValue);
 
 		// Assert
 		expect(result).toBe(mockValue);
@@ -83,9 +91,11 @@ describe("calculatePortfolioPerformanceFunction", () => {
 
     it("preformance summary should be no change negative edge case", () => {
 		// Arrange
+        const initialInvestment: number = 10000;
+        const currentValue: number = 9990;
         const mockValue: PortfolioPerformance = {
-            initialInvestment: 10000,
-            currentValue: 9990,
+            initialInvestment,
+            currentValue,
             profitOrLoss: -10,
             percentageChange: -0.1,
             performanceSummary: "The portfolio has not changed."
@@ -94,7 +104,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
         (calculatePortfolioPerformance as jest.Mock).mockReturnValue(mockValue);
 
 		// Act
-		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 9990);
+		const result: PortfolioPerformance = calculatePortfolioPerformance(initialInvestment, currentValue);
 
 		// Assert
 		expect(result).toBe(mockValue);
@@ -102,9 +112,11 @@ describe("calculatePortfolioPerformanceFunction", () => {
 
     it("preformance summary should be slight loss", () => {
 		// Arrange
+        const initialInvestment: number = 10000;
+        const currentValue: number = 9000;
         const mockValue: PortfolioPerformance = {
-            initialInvestment: 10000,
-            currentValue: 9000,
+            initialInvestment,
+            currentValue,
             profitOrLoss: -1000,
             percentageChange: -10,
             performanceSummary: "The portfolio has lost slightly with a loss of $1000"
@@ -113,7 +125,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
         (calculatePortfolioPerformance as jest.Mock).mockReturnValue(mockValue);
 
 		// Act
-		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 9000);
+		const result: PortfolioPerformance = calculatePortfolioPerformance(initialInvestment, currentValue);
 
 		// Assert
 		expect(result).toBe(mockValue);
@@ -121,9 +133,11 @@ describe("calculatePortfolioPerformanceFunction", () => {
 
     it("preformance summary should be slight loss", () => {
 		// Arrange
+        const initialInvestment: number = 10000;
+        const currentValue: number = 8000;
         const mockValue: PortfolioPerformance = {
-            initialInvestment: 10000,
-            currentValue: 8000,
+            initialInvestment,
+            currentValue,
             profitOrLoss: -2000,
             percentageChange: -20,
             performanceSummary: "The portfolio has lost slightly with a loss of $1000"
@@ -132,7 +146,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
         (calculatePortfolioPerformance as jest.Mock).mockReturnValue(mockValue);
 
 		// Act
-		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 8000);
+		const result: PortfolioPerformance = calculatePortfolioPerformance(initialInvestment, currentValue);
 
 		// Assert
 		expect(result).toBe(mockValue);
@@ -140,9 +154,11 @@ describe("calculatePortfolioPerformanceFunction", () => {
 
     it("preformance summary should be significant loss", () => {
 		// Arrange
+        const initialInvestment: number = 10000;
+        const currentValue: number = 7000;
         const mockValue: PortfolioPerformance = {
-            initialInvestment: 10000,
-            currentValue: 7000,
+            initialInvestment,
+            currentValue,
             profitOrLoss: -3000,
             percentageChange: -30,
             performanceSummary: "The portfolio has lost significantly with a loss of $1000"
@@ -151,7 +167,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
         (calculatePortfolioPerformance as jest.Mock).mockReturnValue(mockValue);
 
 		// Act
-		const result: PortfolioPerformance = calculatePortfolioPerformance(10000, 7000);
+		const result: PortfolioPerformance = calculatePortfolioPerformance(initialInvestment, currentValue);
 
 		// Assert
 		expect(result).toBe(mockValue);

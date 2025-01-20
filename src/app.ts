@@ -2,7 +2,6 @@ import express, { Express } from "express";
 
 import setupSwagger from "../config/swagger";
 import healthRoutes from "./api/v1/routes/healthRoutes";
-import { calculatePortfolioPerformance } from "./portfolio/portfolioPerformance"
 
 const app: Express = express();
 
