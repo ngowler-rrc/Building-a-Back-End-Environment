@@ -93,7 +93,8 @@ It helps me understand how to create endpoint and things I can do to make them b
 I learned how you could use the debugger in test scenarios. I was unaware that this was possible.
 
 -   Did you observe any unexpected behavior? If so, what might be the cause?
-It said a bunch of tests failed and the amount of thests there were were about double what I've writen. This might be because of some weirdness that happens when using the debugger along with npm test.
+It said a bunch of tests failed and the amount of thests there were were about double what I've writen.
+This was because I ran build and it was using the tests in the dist directory.
 
 -   Are there areas for improvement or refactoring in this part of the code?
 Other than documenting the code such as arrange, act, and assert I don't think so.
