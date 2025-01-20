@@ -32,7 +32,7 @@ export function calculatePortfolioPerformance(initialInvestment: number, current
         lossSignificant: `The portfolio has lost significantly with a loss of $${profitOrLoss}.`
     };
 
-    let performanceSummary: string =
+    const performanceSummary: string =
     percentageChange > 20 ? summaries.gainSignificant :
     percentageChange > 10 ? summaries.gainModerate :
     percentageChange > 0.1 ? summaries.gainSlightly :
@@ -61,7 +61,7 @@ export interface Asset {
 export function findLargestHolding(assets: Asset[]): Asset {
     let largestHolding: Asset = assets[0];
 
-    for (let i = 1; i < assets.length; i++) {
+    for (let i: number = 1; i < assets.length; i++) {
         if (assets[i].value > largestHolding.value) {
             largestHolding = assets[i];
         }
@@ -76,7 +76,7 @@ export interface AssetAllocation {
 }
 
 export function findAssetAllocationPercentage(assets: Asset[]): AssetAllocation[] {
-    let assetAllocationPercentages: AssetAllocation[] = [];
+    const assetAllocationPercentages: AssetAllocation[] = [];
     let totalValue: number = 0;
 
     assets.forEach(asset => {

@@ -20,7 +20,7 @@ describe("calculatePortfolioPerformanceFunction", () => {
         (calculatePortfolioPerformance as jest.Mock).mockReturnValue(mockValue);
 
 		// Act
-		const result = calculatePortfolioPerformance(initialInvestment, currentValue);
+		const result: PortfolioPerformance = calculatePortfolioPerformance(initialInvestment, currentValue);
 
 		// Assert
 		expect(result).toEqual(mockValue);
