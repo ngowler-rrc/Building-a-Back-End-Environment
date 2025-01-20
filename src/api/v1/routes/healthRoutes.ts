@@ -13,11 +13,16 @@ const router: Router = express.Router();
  *     description: Returns server's status and api version.
 */
 router.get("/health", (req, res) => {
+	const status: string = 'OK';
+	const uptime: number = process.uptime();
+	const timestamp: string = new Date().toISOString();
+	const version: string = '1.0.0';
+
 	res.json({
-		status: "OK",
-		uptime: process.uptime(),
-		timestamp: new Date().toISOString(),
-		version: "1.0.0",
+		status,
+		uptime,
+		timestamp,
+		version,
 	});
 });
 
